@@ -4,13 +4,30 @@ from turtle import title
 import requests
 from bs4 import BeautifulSoup
 
+
+# DONE:
+# 1. Make HTTP GET request to the url
+# 2. Parse Response and get all the available links <a href>
+# 3. Follow the extacted links and repeat the same 
+# 4. Break out of the loop either hitting the given depth
+
+
+# TODO:
+# 1. Break more links available 
+# 2. Try to  avoid duplicate link responses
+# 3. Try to draft a simple  pages to debug the crawler   
+
+
+
+
+
 Start_url = "https://quotes.toscrape.com/"
 
 data = []
 
 def crawl(url,depth ):
     try:  
-        print("crawling url: '%s'" % url)
+        print("crawling url: '%s' at depth '%d' " % (url,depth))
         responds = requests.get(url)
     except :
         print("Failed to perform HTTP GET request on '%s'\n" % url)
@@ -50,8 +67,6 @@ def crawl(url,depth ):
 
     for link in links:
         try:
-           print(" URL depth '%d' : " % depth)
-           
            if 'http' not in link['href']:
                
                follow_url = url + link['href']
@@ -64,6 +79,6 @@ def crawl(url,depth ):
 
     return  
 
-crawl(Start_url, 2)
-#print(json.dumps(result, indent= 2))
+crawl(Start_url, 1)
+#print(json.dumps(data, indent= 2))
 print(len(data))
